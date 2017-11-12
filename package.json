@@ -1,0 +1,26 @@
+{
+  "name": "atp-ws-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "NODE_ENV=prod forever -o out.log -e err.log dist/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^8.0.19",
+    "body-parser": "1.15.2",
+    "cloudinary": "^1.5.0",
+    "express": "4.14.0",
+    "firebase": "^4.6.2",
+    "forever": "^0.15.3",
+    "morgan": "^1.7.0",
+    "phantomjs-prebuilt": "^2.1.16",
+    "typescript": "^2.1.4",
+    "typings": "^2.1.0",
+    "webshot": "^0.18.0"
+  }
+}

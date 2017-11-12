@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "declaration": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "preserveConstEnums": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "outDir": "dist",
+    "typeRoots": [ "node_modules/@types" ]
+  },
+  "exclude": [
+    "postgres",
+    "web-server",
+    "node_modules",
+    "dist"
+  ]
+}
