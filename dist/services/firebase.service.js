@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const firebase = require("firebase");
 class FirebaseService {
     constructor(app) {

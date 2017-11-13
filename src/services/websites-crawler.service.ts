@@ -11,6 +11,7 @@ cloudinary.config({
 
 export class WebsitesCrawlerService {
     private queue = [];
+    private jobsInprocess = {};
     private websitesListLocal;
 
     constructor(private app) {
@@ -36,7 +37,7 @@ export class WebsitesCrawlerService {
             list = [];
         }
         list.forEach(ws => {
-            if (ws.thumbnail.indexOf('cloudinary') < 0) {
+            if (ws.thumbnail.indexOf('cloudinary') < 0 && !this.jobsInprocess[ws.id]) {
                 this.queue.push({
                     id: ws.id,
                     url: ws.url
@@ -48,19 +49,29 @@ export class WebsitesCrawlerService {
 
     private handleQueue() {
         if (this.queue.length > 0) {
-            this.crawlAndUpload(this.queue[0].url)
-                .then(thumbnailUrl => {
-                    let data = {
-                        thumbnail: thumbnailUrl
-                    };
-                    this.app.firebaseSvc.fb.ref(`/websites`).child(this.queue[0].id).update(data);
-                    this.queue.splice(0, 1);
-                })
-                .then(this.handleQueue.bind(this))
-                .catch(err => {
-                    console.log('ERROR!!! ---- ', err);
-                });
+            this.jobsInprocess[this.queue[0].id] = 1;
+            this.processJob({
+                url: this.queue[0].url,
+                ws_id: this.queue[0].id
+            });
+            this.queue.splice(0, 1);
         }
+    }
+
+
+    private processJob(job) {
+        this.crawlAndUpload(job.url)
+            .then(thumbnailUrl => {
+                let data = {
+                    thumbnail: thumbnailUrl
+                };
+                this.app.firebaseSvc.fb.ref(`/websites`).child(job.ws_id).update(data);
+                delete this.jobsInprocess[job.ws_id];
+            })
+            .then(this.handleQueue.bind(this))
+            .catch(err => {
+                console.log('ERROR!!! ---- ', err);
+            });
     }
 
     private crawlAndUpload(url) {

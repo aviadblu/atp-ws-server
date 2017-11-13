@@ -20,7 +20,7 @@
     "morgan": "^1.7.0",
     "phantomjs-prebuilt": "^2.1.16",
     "ts-md5": "^1.2.2",
-    "typescript": "^2.1.4",
+    "typescript": "2.1.4",
     "typings": "^2.1.0",
     "webshot": "^0.18.0"
   }
