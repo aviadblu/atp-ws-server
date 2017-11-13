@@ -92,9 +92,14 @@ export class WebsitesCrawlerService {
                     reject(err);
                 } else {
                     cloudinary.v2.uploader.upload(tmpImage, {public_id: "webshot/" + WebsitesCrawlerService.hashString(url)}, function (error, result) {
-                        console.log('upload to cloudinary completed!');
-                        fs.unlinkSync(tmpImage);
-                        resolve(result.url.replace('/upload/', '/upload/c_fill,h_120,w_160/'));
+                        if (error) {
+                            reject(error);
+                        } else {
+                            console.log('upload to cloudinary completed!');
+                            // todo: fix unlink async bug
+                            //fs.unlinkSync(tmpImage);
+                            resolve(result.url.replace('/upload/', '/upload/c_fill,h_120,w_160/'));
+                        }
                     });
                 }
             });

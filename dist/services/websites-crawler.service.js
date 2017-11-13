@@ -1,7 +1,6 @@
 "use strict";
 const webshot = require("webshot");
 const cloudinary = require("cloudinary");
-const fs = require("fs");
 const md5_1 = require("ts-md5/dist/md5");
 cloudinary.config({
     cloud_name: 'db5v7kkij',
@@ -81,9 +80,15 @@ class WebsitesCrawlerService {
                 }
                 else {
                     cloudinary.v2.uploader.upload(tmpImage, { public_id: "webshot/" + WebsitesCrawlerService.hashString(url) }, function (error, result) {
-                        console.log('upload to cloudinary completed!');
-                        fs.unlinkSync(tmpImage);
-                        resolve(result.url.replace('/upload/', '/upload/c_fill,h_120,w_160/'));
+                        if (error) {
+                            reject(error);
+                        }
+                        else {
+                            console.log('upload to cloudinary completed!');
+                            // todo: fix unlink async bug
+                            //fs.unlinkSync(tmpImage);
+                            resolve(result.url.replace('/upload/', '/upload/c_fill,h_120,w_160/'));
+                        }
                     });
                 }
             });
