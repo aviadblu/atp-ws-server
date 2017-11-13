@@ -3,4 +3,4 @@
 /node_modules/
 /err.log
 /out.log
-/web-server/eibo-server/node_modules/
+/dist/tmp
