@@ -12,7 +12,7 @@ module Route {
         constructor(app) {
             this.router = express.Router();
 
-            let clientPath = path.resolve(__dirname, '../../../atp-ws/dist');
+            let clientPath = path.resolve(__dirname, '../../../../atp-ws-build/dist');
 
             app.use(express.static(clientPath));
 

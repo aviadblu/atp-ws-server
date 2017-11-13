@@ -7,7 +7,7 @@ var Route;
     class Home {
         constructor(app) {
             this.router = express.Router();
-            let clientPath = path.resolve(__dirname, '../../../atp-ws/dist');
+            let clientPath = path.resolve(__dirname, '../../../../atp-ws-build/dist');
             app.use(express.static(clientPath));
             this.router.get('/*', function (req, res) {
                 res.sendFile(clientPath + '/index.html');
